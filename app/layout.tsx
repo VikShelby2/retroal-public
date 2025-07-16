@@ -22,9 +22,9 @@ const cinzel = Cinzel({
 })
 
 export const metadata: Metadata = {
-  title: "Velvet Revival - Vintage Clothing Collection",
+  title: "Retroshopal - Vintage Clothing Collection",
   description: "Discover timeless vintage fashion pieces curated for the modern wardrobe",
-    generator: 'v0.dev'
+    
 }
 
 export default function RootLayout({
@@ -34,6 +34,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      
+ <head>
+        {/* ✅ Add your favicon here */}
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body
         className={`${montserrat.variable} ${playfair.variable} ${cinzel.variable} font-sans bg-ivory text-espresso antialiased`}
       >
