@@ -310,10 +310,7 @@ const { selectedCollection, selectedCollectionProducts, loading, error  ,  newLo
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className=" text-4xl font-bold text-espresso mb-4">Collection Not Found</h1>
-          <Link href="/collections" className="text-rust hover:text-espresso underline">
-            Back to Collections
-          </Link>
+           <div className="w-full h-[300px] flex items-center jusitfy-center"><Loader className="animate-spin" /></div>
         </div>
       </div>
     )
