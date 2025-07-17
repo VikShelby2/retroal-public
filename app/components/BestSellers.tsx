@@ -143,7 +143,7 @@ export default function BestSellers({ onProductClick }: BestSellersProps) {
     <section className="py-20 bg-ivory">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-espresso mb-4">Best Sellers</h2>
+          <h2 className=" text-4xl md:text-5xl font-bold text-espresso mb-4">Best Sellers</h2>
           <p className="text-lg text-espresso/80 max-w-2xl mx-auto">
             Our most loved pieces, chosen by customers who appreciate timeless style
           </p>

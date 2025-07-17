@@ -70,7 +70,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-              <h1 className="font-serif text-5xl md:text-7xl font-bold text-espresso mb-6">Our Story</h1>
+              <h1 className=" text-5xl md:text-7xl font-bold text-espresso mb-6">Our Story</h1>
               <p className="text-xl text-espresso/80 leading-relaxed mb-8">
                 Born from a love of timeless fashion and sustainable living, Retroshop.al is more than just a vintage
                 boutique—we're curators of fashion history, guardians of craftsmanship, and champions of individual
@@ -149,7 +149,7 @@ export default function AboutPage() {
                 viewport={{ once: true }}
                 className="text-center"
               >
-                <div className="font-serif text-3xl md:text-4xl font-bold text-rust mb-2">{stat.number}</div>
+                <div className=" text-3xl md:text-4xl font-bold text-rust mb-2">{stat.number}</div>
                 <div className="text-espresso/70 font-medium">{stat.label}</div>
               </motion.div>
             ))}
@@ -166,7 +166,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="font-serif text-4xl md:text-5xl font-bold text-espresso mb-6"
+              className=" text-4xl md:text-5xl font-bold text-espresso mb-6"
             >
               Why We Do What We Do
             </motion.h2>
@@ -198,7 +198,7 @@ export default function AboutPage() {
                     <value.icon className="w-6 h-6 text-espresso" />
                   </div>
                   <div>
-                    <h3 className="font-serif text-xl font-bold text-espresso mb-3">{value.title}</h3>
+                    <h3 className=" text-xl font-bold text-espresso mb-3">{value.title}</h3>
                     <p className="text-espresso/70 leading-relaxed">{value.description}</p>
                   </div>
                 </div>
@@ -218,7 +218,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-espresso mb-6">Our Curation Process</h2>
+            <h2 className=" text-4xl md:text-5xl font-bold text-espresso mb-6">Our Curation Process</h2>
             <p className="text-lg text-espresso/80 max-w-3xl mx-auto leading-relaxed">
               Every piece goes through our rigorous selection and authentication process to ensure you receive only the
               finest vintage treasures.
@@ -257,7 +257,7 @@ export default function AboutPage() {
                 <div className="bg-rust text-ivory w-16 h-16 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">
                   {process.step}
                 </div>
-                <h3 className="font-serif text-2xl font-bold text-espresso mb-4">{process.title}</h3>
+                <h3 className=" text-2xl font-bold text-espresso mb-4">{process.title}</h3>
                 <p className="text-espresso/70 leading-relaxed">{process.description}</p>
               </motion.div>
             ))}
@@ -275,7 +275,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-espresso mb-6">Meet Our Team</h2>
+            <h2 className=" text-4xl md:text-5xl font-bold text-espresso mb-6">Meet Our Team</h2>
             <p className="text-lg text-espresso/80 max-w-3xl mx-auto leading-relaxed">
               The passionate individuals behind Retroshop.al who make our vintage dreams come true.
             </p>
@@ -302,7 +302,7 @@ export default function AboutPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-espresso/20 to-transparent" />
                 </div>
                 <div className="p-6">
-                  <h3 className="font-serif text-xl font-bold text-espresso mb-1">{member.name}</h3>
+                  <h3 className=" text-xl font-bold text-espresso mb-1">{member.name}</h3>
                   <p className="text-rust font-medium mb-4">{member.role}</p>
                   <p className="text-espresso/70 text-sm leading-relaxed">{member.bio}</p>
                 </div>
@@ -322,7 +322,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="max-w-3xl mx-auto"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">Join Our Vintage Community</h2>
+            <h2 className=" text-4xl md:text-5xl font-bold mb-6">Join Our Vintage Community</h2>
             <p className="text-xl text-ivory/80 leading-relaxed mb-8">
               Discover unique pieces, learn about fashion history, and connect with fellow vintage enthusiasts. Your
               perfect vintage piece is waiting for you.

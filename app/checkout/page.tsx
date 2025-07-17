@@ -295,7 +295,7 @@ useEffect(() => {
             >
               <Check className="w-10 h-10 text-green-600" />
             </motion.div>
-            <h1 className="font-serif text-4xl font-bold text-espresso mb-4">Order Confirmed!</h1>
+            <h1 className=" text-4xl font-bold text-espresso mb-4">Order Confirmed!</h1>
             <p className="text-lg text-espresso/80 mb-6">
               Thank you for your order. We'll prepare your vintage pieces with care.
             </p>
@@ -402,7 +402,7 @@ useEffect(() => {
                   exit={{ opacity: 0, x: -20 }}
                   className="bg-white p-6 rounded-lg"
                 >
-                  <h2 className="font-serif text-2xl font-bold text-espresso mb-6 flex items-center gap-3">
+                  <h2 className=" text-2xl font-bold text-espresso mb-6 flex items-center gap-3">
                     <Package className="w-6 h-6" />
                     Shipping Information
                   </h2>
@@ -542,7 +542,7 @@ useEffect(() => {
                 >
                   {/* Shipping Address */}
                   <div className="bg-white p-6 rounded-lg">
-                    <h3 className="font-serif text-xl font-bold text-espresso mb-4 flex items-center gap-3">
+                    <h3 className=" text-xl font-bold text-espresso mb-4 flex items-center gap-3">
                       <MapPin className="w-5 h-5" />
                       Shipping Address
                     </h3>
@@ -570,7 +570,7 @@ useEffect(() => {
 
                   {/* Payment Method */}
                   <div className="bg-white p-6 rounded-lg">
-                    <h3 className="font-serif text-xl font-bold text-espresso mb-4 flex items-center gap-3">
+                    <h3 className=" text-xl font-bold text-espresso mb-4 flex items-center gap-3">
                       <CreditCard className="w-5 h-5" />
                       Payment Method
                     </h3>
@@ -593,7 +593,7 @@ useEffect(() => {
 
                   {/* Order Items */}
                   <div className="bg-white p-6 rounded-lg">
-                    <h3 className="font-serif text-xl font-bold text-espresso mb-4">Order Items</h3>
+                    <h3 className=" text-xl font-bold text-espresso mb-4">Order Items</h3>
                     <div className="space-y-4">
                       {state.items.map((item) => (
                         <div key={`${item.id}-${item.selectedSize}`} className="flex gap-4 p-4 bg-ivory rounded-sm">
@@ -649,7 +649,7 @@ useEffect(() => {
               animate={{ opacity: 1, y: 0 }}
               className="bg-white p-6 rounded-lg sticky top-24"
             >
-              <h3 className="font-serif text-xl font-bold text-espresso mb-4">Order Summary</h3>
+              <h3 className=" text-xl font-bold text-espresso mb-4">Order Summary</h3>
               <div className="space-y-4 mb-6">
                 {state.items.map((item) => (
                   <div key={`${item.id}-${item.selectedSize}`} className="flex gap-3">

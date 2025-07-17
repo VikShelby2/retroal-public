@@ -43,7 +43,7 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
             className="md:col-span-1"
           >
-            <h3 className="font-serif text-2xl font-bold mb-4">Velvet Revival</h3>
+            <h3 className=" text-2xl font-bold mb-4">Velvet Revival</h3>
             <p className="text-ivory/80 mb-6 leading-relaxed">
               Curating timeless vintage fashion for the modern wardrobe since 2018. Every piece tells a story.
             </p>

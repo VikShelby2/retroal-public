@@ -161,7 +161,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
               >
                 <div className="mb-4">
                   <p className="text-rust font-medium mb-2">{product.category}</p>
-                  <h2 id="product-modal-title" className="font-serif text-3xl font-bold text-espresso mb-4">
+                  <h2 id="product-modal-title" className=" text-3xl font-bold text-espresso mb-4">
                     {product.name}
                   </h2>
 

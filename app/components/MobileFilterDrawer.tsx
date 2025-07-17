@@ -42,7 +42,7 @@ export default function MobileFilterDrawer({
           >
             <div className="p-4 border-b border-espresso/10">
               <div className="flex items-center justify-between">
-                <h3 className="font-serif text-xl font-bold text-espresso">Filters</h3>
+                <h3 className=" text-xl font-bold text-espresso">Filters</h3>
                 <motion.button
                   className="p-2 hover:bg-cream rounded-sm transition-colors"
                   onClick={onClose}

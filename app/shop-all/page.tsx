@@ -220,7 +220,7 @@ export default function ShopPage() {
         <div
           className="mb-1"
         >
-          <h1 className="font-serif text-4xl md:text-5xl font-bold text-espresso mb-4">Shop All</h1>
+          <h1 className=" text-4xl md:text-5xl font-bold text-espresso mb-4">Shop All</h1>
           <p className="text-lg text-espresso/80">
             Discover our complete collection of carefully curated vintage pieces
           </p>
@@ -345,7 +345,7 @@ export default function ShopPage() {
             {/* No Results */}
             {filteredAndSortedProducts.length === 0 && (
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-16">
-                <h3 className="font-serif text-2xl font-bold text-espresso mb-4">No items found</h3>
+                <h3 className=" text-2xl font-bold text-espresso mb-4">No items found</h3>
                 <p className="text-espresso/70 mb-6">Try adjusting your filters or search terms</p>
                 <motion.button
                   className="bg-gold text-espresso px-6 py-3 rounded-sm font-medium hover:bg-opacity-90 transition-colors"

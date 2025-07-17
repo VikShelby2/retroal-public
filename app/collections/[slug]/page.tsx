@@ -5,7 +5,7 @@ import { useParams } from "next/navigation"
 import Header from "../../components/Header"
 import ProductCard from "../../components/ProductCard"
 import SortDropdown from "../../components/SortDropdown"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Loader } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import ProductModal from "@/app/components/ProductModal"
@@ -310,7 +310,7 @@ const { selectedCollection, selectedCollectionProducts, loading, error  ,  newLo
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className="font-serif text-4xl font-bold text-espresso mb-4">Collection Not Found</h1>
+          <h1 className=" text-4xl font-bold text-espresso mb-4">Collection Not Found</h1>
           <Link href="/collections" className="text-rust hover:text-espresso underline">
             Back to Collections
           </Link>
@@ -322,7 +322,7 @@ const { selectedCollection, selectedCollectionProducts, loading, error  ,  newLo
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto md:px-[5rem] py-12 max-w-full px-5 md:max-w-[1200px] ">
         {/* Back Button */}
         <Link href="/collections">
           <motion.button
@@ -334,53 +334,6 @@ const { selectedCollection, selectedCollectionProducts, loading, error  ,  newLo
           </motion.button>
         </Link>
 
-        {/* Collection Hero */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="relative mb-12 rounded-lg overflow-hidden"
-        >
-          <Image
-            src={selectedCollection.photo.url || "/placeholder.svg"}
-            alt={selectedCollection.name}
-            width={800}
-            height={300}
-            className="w-full h-64 md:h-80 object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-espresso/80 via-espresso/40 to-transparent" />
-          <div className="absolute inset-0 flex items-center">
-            <div className="container mx-auto px-4">
-              <div className="max-w-2xl">
-                <motion.h1
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="font-serif text-4xl md:text-6xl font-bold text-ivory mb-4"
-                >
-                  {selectedCollection.name}
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  className="text-lg text-ivory/90 mb-4 leading-relaxed"
-                >
-                  {selectedCollection.description}
-                </motion.p>
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                  className="flex items-center gap-4 text-ivory/80"
-                >
-                 
-                  <span>{selectedCollectionProducts.length} pieces</span>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
 
         {/* Controls */}
         <motion.div
@@ -390,7 +343,7 @@ const { selectedCollection, selectedCollectionProducts, loading, error  ,  newLo
           className="flex justify-between items-center mb-8"
         >
           <div>
-            <h2 className="font-serif text-2xl font-bold text-espresso">
+            <h2 className=" text-2xl font-bold text-espresso">
               {selectedCollectionProducts.length} {selectedCollectionProducts.length === 1 ? "piece" : "pieces"}
             </h2>
           </div>
@@ -417,19 +370,7 @@ const { selectedCollection, selectedCollectionProducts, loading, error  ,  newLo
             ))}
           </motion.div>
         ) : (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-16">
-            <h3 className="font-serif text-2xl font-bold text-espresso mb-4">No items in this collection yet</h3>
-            <p className="text-espresso/70 mb-6">We're constantly adding new pieces. Check back soon!</p>
-            <Link href="/collections">
-              <motion.button
-                className="bg-gold text-espresso px-6 py-3 rounded-sm font-medium hover:bg-opacity-90 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Browse Other Collections
-              </motion.button>
-            </Link>
-          </motion.div>
+          <div className="w-full h-[300px] flex items-center jusitfy-center"><Loader className="animate-spin" /></div>
         )}
       </div>
         <ProductModal product={selectedProduct} isOpen={isModalOpen} onClose={handleCloseModal} />

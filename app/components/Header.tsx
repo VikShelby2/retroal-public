@@ -39,7 +39,7 @@ export default function Header() {
       <div className="container py-2 mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="font-serif text-2xl flex items-center gap-1 font-bold text-white">
+          <Link href="/" className=" text-2xl flex items-center gap-1 font-bold text-white">
             <Image src={"/logo.png"} alt="logo" width={60} height={60} />
             <motion.span whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 400, damping: 10 }}>
               Retroshop.al

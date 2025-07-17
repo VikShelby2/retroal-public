@@ -148,7 +148,7 @@ export default function CuratedCollections({ onProductClick }: CuratedCollection
           
           className="text-center mb-12"
         >
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-espresso mb-4">Curated Collections</h2>
+          <h2 className=" text-4xl md:text-5xl font-bold text-espresso mb-4">Curated Collections</h2>
           <p className="text-lg text-espresso/80 max-w-2xl mx-auto">
             Explore our carefully organized vintage collections by category
           </p>
@@ -172,6 +172,7 @@ export default function CuratedCollections({ onProductClick }: CuratedCollection
             </motion.button>
           ))}
         </div>
+        
 
         {/* Products Grid */}
   <AnimatedContent

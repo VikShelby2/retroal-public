@@ -37,7 +37,7 @@ export default function FeaturedProducts() {
     <section className="py-20 bg-ivory paper-texture">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-espresso mb-4">Featured Pieces</h2>
+          <h2 className=" text-4xl md:text-5xl font-bold text-espresso mb-4">Featured Pieces</h2>
           <p className="text-lg text-espresso/80 max-w-2xl mx-auto">
             Each piece in our collection is hand-selected for its quality, authenticity, and timeless appeal
           </p>
@@ -56,7 +56,7 @@ export default function FeaturedProducts() {
                 />
                 <div className="absolute inset-0 bg-espresso/0 group-hover:bg-espresso/10 transition-colors duration-300"></div>
               </div>
-              <h3 className="font-serif text-xl font-semibold text-espresso mb-2">{product.name}</h3>
+              <h3 className=" text-xl font-semibold text-espresso mb-2">{product.name}</h3>
               <p className="text-espresso/70 mb-3">{product.description}</p>
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-lg text-espresso">{product.price}</span>

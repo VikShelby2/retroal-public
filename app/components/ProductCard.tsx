@@ -54,7 +54,7 @@ export default function ProductCard({ product, onClick, index = 0, viewMode = "g
         <div className="flex-1 p-6 flex flex-col justify-between">
           <div>
             <p className="text-sm text-rust font-medium mb-1">{product.category}</p>
-            <h3 className="font-serif text-xl font-semibold text-black mb-2 group-hover:text-rust transition-colors">
+            <h3 className=" text-xl font-semibold text-black mb-2 group-hover:text-rust transition-colors">
               {product.name}
             </h3>
             <p className="text-black/70 mb-4 line-clamp-2">{product.description}</p>

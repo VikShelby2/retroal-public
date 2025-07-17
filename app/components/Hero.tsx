@@ -17,7 +17,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 text-center text-ivory px-4 max-w-4xl">
-        <h1 className="font-serif text-5xl md:text-7xl font-bold mb-6 leading-tight">
+        <h1 className=" text-5xl md:text-7xl font-bold mb-6 leading-tight">
           Timeless Style,
           <br />
           <span className="font-display text-gold">Vintage Soul</span>

@@ -84,7 +84,7 @@ useEffect(()=>{
 
                   {/* Collection Name and Arrow */}
                   <div className="flex items-center justify-between">
-                    <h3 className="font-serif text-sm md:text-xl font-semibold text-espresso group-hover:text-rust transition-colors duration-300">
+                    <h3 className=" text-sm md:text-xl font-semibold text-espresso group-hover:text-rust transition-colors duration-300">
                       {collection.name}
                     </h3>
                     <motion.div

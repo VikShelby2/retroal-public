@@ -77,7 +77,7 @@ export default function FilterSidebar({ filters, setFilters, onClearAll }: Filte
       className="bg-cream p-6 rounded-lg sticky top-24"
     >
       <div className="flex items-center justify-between mb-6">
-        <h3 className="font-serif text-xl font-bold text-espresso">Filters</h3>
+        <h3 className=" text-xl font-bold text-espresso">Filters</h3>
         <motion.button
           className="text-sm text-rust hover:text-espresso underline"
           onClick={onClearAll}

@@ -51,7 +51,7 @@ export default function Newsletter() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-espresso mb-4">Join the Revival</h2>
+            <h2 className=" text-4xl md:text-5xl font-bold text-espresso mb-4">Join the Revival</h2>
             <p className="text-lg text-espresso/80 mb-8">
               Get 10% off your first order and be the first to know about new arrivals, exclusive sales, and vintage
               fashion tips.

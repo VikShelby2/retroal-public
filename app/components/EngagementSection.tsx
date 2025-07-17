@@ -61,7 +61,7 @@ export default function EngagementSection() {
             transition={{ duration: 0.6 }}
             className="mb-12"
           >
-            <h2 className="font-serif text-4xl md:text-6xl font-bold text-ivory mb-8">
+            <h2 className=" text-4xl md:text-6xl font-bold text-ivory mb-8">
               Fashion that's{" "}
               <span className="font-display text-gold relative">
                 {displayText}

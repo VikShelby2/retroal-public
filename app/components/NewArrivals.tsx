@@ -84,7 +84,7 @@ export default function NewArrivals({ onProductClick }: NewArrivalsProps) {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-espresso mb-4">New Arrivals</h2>
+          <h2 className=" text-4xl md:text-5xl font-bold text-espresso mb-4">New Arrivals</h2>
           <p className="text-lg text-espresso/80 max-w-2xl mx-auto">
             Fresh finds from our latest vintage hunting adventures
           </p>

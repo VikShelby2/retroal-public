@@ -46,7 +46,7 @@ function removeDollarSign(price: string | number): string {
             <div className="flex items-center justify-between p-6 border-b border-espresso/10">
               <div className="flex items-center gap-3">
                 <ShoppingBag className="w-6 h-6 text-espresso" />
-                <h2 className="font-serif text-xl font-bold text-espresso">Shopping Cart ({state.totalItems})</h2>
+                <h2 className=" text-xl font-bold text-espresso">Shopping Cart ({state.totalItems})</h2>
               </div>
               <motion.button
                 className="p-2 hover:bg-cream rounded-sm transition-colors"
@@ -68,7 +68,7 @@ function removeDollarSign(price: string | number): string {
                   className="flex flex-col items-center justify-center h-full text-center p-6"
                 >
                   <ShoppingBag className="w-16 h-16 text-espresso/30 mb-4" />
-                  <h3 className="font-serif text-xl font-semibold text-espresso mb-2">Your cart is empty</h3>
+                  <h3 className=" text-xl font-semibold text-espresso mb-2">Your cart is empty</h3>
                   <p className="text-espresso/70 mb-6">Discover our vintage collection and add some timeless pieces</p>
                   <motion.button
                     className="bg-gold text-espresso px-6 py-3 rounded-sm font-medium hover:bg-opacity-90 transition-colors"
