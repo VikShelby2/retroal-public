@@ -279,7 +279,7 @@ const [selectedProduct, setSelectedProduct] = useState(null)
              </div>
            </div>
             <ProductModal product={selectedProduct} isOpen={isModalOpen} onClose={handleCloseModal} />
-           <Newsletter />
+          
            <Footer />
     </main>
   )

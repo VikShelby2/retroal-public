@@ -11,6 +11,7 @@ import Image from "next/image"
 import ProductModal from "@/app/components/ProductModal"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchCollectionWithProducts } from "@/context/collectionsSlice"
+import Footer from "@/app/components/Footer"
 
 // Extended product data with collection associations
 const allProducts = [
@@ -378,6 +379,7 @@ const { selectedCollection, selectedCollectionProducts, loading, error  ,  newLo
         )}
       </div>
         <ProductModal product={selectedProduct} isOpen={isModalOpen} onClose={handleCloseModal} />
+           <Footer />
     </div>
   )
 }

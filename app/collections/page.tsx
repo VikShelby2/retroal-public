@@ -8,6 +8,7 @@ import { fetchCollections } from "@/context/collectionsSlice"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Button } from "@/components/ui/button"
+import Footer from "../components/Footer"
 
 
 export default function CollectionsPage() {
@@ -102,6 +103,8 @@ useEffect(()=>{
           
         </div>
       </div>
+                 <Footer />
+      
     </div>
   )
 }

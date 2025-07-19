@@ -1,34 +1,22 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Instagram, Facebook, Twitter, Mail, Phone, MapPin } from "lucide-react"
+import { Instagram, Facebook, Twitter, Mail,TikTok , Phone, MapPin } from "lucide-react"
 import Link from "next/link"
-
+import { FaTiktok } from "react-icons/fa";
 export default function Footer() {
   const socialIcons = [
-    { Icon: Instagram, href: "#", label: "Instagram" },
-    { Icon: Facebook, href: "#", label: "Facebook" },
-    { Icon: Twitter, href: "#", label: "Twitter" },
+    { Icon: Instagram, href: "https://www.instagram.com/retroshop.al/", label: "Instagram" },
+    { Icon: Facebook, href: "https://www.facebook.com/profile.php?id=100069654892619", label: "Facebook" },
+    { Icon: FaTiktok, href: "https://www.tiktok.com/@retroshop.al?_t=ZM-8yAAENAzkve&_r=1", label: "Twitter" },
   ]
 
-  const quickLinks = [
-    { name: "About Us", href: "#" },
-    { name: "Size Guide", href: "#" },
-    { name: "Care Instructions", href: "#" },
-    { name: "Sustainability", href: "#" },
-  ]
 
-  const customerService = [
-    { name: "Contact Us", href: "#" },
-    { name: "Shipping & Returns", href: "#" },
-    { name: "FAQ", href: "#" },
-    { name: "Track Your Order", href: "#" },
-  ]
 
   const contactInfo = [
-    { Icon: Mail, text: "hello@velvetrevival.com" },
-    { Icon: Phone, text: "(555) 123-4567" },
-    { Icon: MapPin, text: "Brooklyn, NY" },
+    { Icon: Mail, text: "retroshop.al@gmail.com" },
+    { Icon: Phone, text: "+355676738955" },
+    { Icon: MapPin, text: "Tirane , Albania" },
   ]
 
   return (
@@ -68,55 +56,7 @@ export default function Footer() {
           </motion.div>
 
           {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              {quickLinks.map((link, index) => (
-                <motion.li
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                >
-                  <Link href={link.href} className="text-ivory/80 hover:text-gold transition-colors duration-300">
-                    {link.name}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Customer Service */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h4 className="font-semibold text-lg mb-4">Customer Service</h4>
-            <ul className="space-y-2">
-              {customerService.map((link, index) => (
-                <motion.li
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                >
-                  <Link href={link.href} className="text-ivory/80 hover:text-gold transition-colors duration-300">
-                    {link.name}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-
+       
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -144,30 +84,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="border-t border-ivory/20 pt-8 flex flex-col md:flex-row justify-between items-center"
-        >
-          <p className="text-ivory/60 text-sm mb-4 md:mb-0">© 2024 Velvet Revival. All rights reserved.</p>
-          <div className="flex space-x-6 text-sm">
-            {["Privacy Policy", "Terms of Service", "Cookies"].map((item, index) => (
-              <motion.div
-                key={item}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-              >
-                <Link href="#" className="text-ivory/60 hover:text-gold transition-colors duration-300">
-                  {item}
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+   
       </div>
     </footer>
   )
