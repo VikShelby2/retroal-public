@@ -1,25 +1,44 @@
-"use client"
+"use client";
 
-import { motion, AnimatePresence } from "framer-motion"
-import Image from "next/image"
-import Link from "next/link"
-import { X, Plus, Minus, ShoppingBag, Trash2 } from "lucide-react"
-import { useCart } from "../contexts/CartContext"
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { X, Plus, Minus, ShoppingBag, Trash2 } from "lucide-react";
+import { useCart } from "../contexts/CartContext";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 export default function CartDrawer() {
-  const { state, closeCart, updateQuantity, removeFromCart, clearCart } = useCart()
+  const { state, closeCart, updateQuantity, removeFromCart, clearCart } = useCart();
+  
+  // This state will now correctly track if an item has reached its stock limit.
+  const [isOutOfStock, setIsOutOfStock] = useState({});
 
-  const handleQuantityChange = (id: number, currentQuantity: number, change: number) => {
-    const newQuantity = currentQuantity + change
+  const isItemOutOfStock = (item) => {
+    return isOutOfStock[item.id] || item.quantity >= item.stock;
+  };
+
+  const handleQuantityChange = (item, change) => {
+    const newQuantity = item.quantity + change;
+
     if (newQuantity <= 0) {
-      removeFromCart(id)
+      // If quantity is zero or less, remove the item from the cart
+      removeFromCart(item.id);
+      setIsOutOfStock(prev => ({ ...prev, [item.id]: false })); // Reset out of stock status
+    } else if (newQuantity > item.stock) {
+      // If the new quantity exceeds stock, mark it as out of stock
+      setIsOutOfStock(prev => ({ ...prev, [item.id]: true }));
     } else {
-      updateQuantity(id, newQuantity)
+      // Otherwise, update the quantity and ensure it's not marked as out of stock
+      updateQuantity(item.id, newQuantity);
+      setIsOutOfStock(prev => ({ ...prev, [item.id]: false }));
     }
-  }
-function removeDollarSign(price: string | number): string {
-  return String(price).replace(/^\$/, '');
-}
+  };
+  
+  // This function is no longer needed with the revised state management.
+  // function removeDollarSign(price: string | number): string {
+  //   return String(price).replace(/^\$/, '');
+  // }
 
   return (
     <AnimatePresence>
@@ -103,16 +122,17 @@ function removeDollarSign(price: string | number): string {
 
                         {/* Product Details */}
                         <div className="flex-1 min-w-0">
-                          <div className="w-full flex items-center justify-between"><h4 className="font-semibold text-espresso truncate">{item.name}</h4>
-  <motion.button
-                          className="p-2 text-espresso/50 hover:text-rust transition-colors"
-                          onClick={() => removeFromCart(item.id)}
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          aria-label="Remove item"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </motion.button>
+                          <div className="w-full flex items-center justify-between">
+                            <h4 className="font-semibold text-espresso truncate">{item.name}</h4>
+                            <motion.button
+                              className="p-2 text-espresso/50 hover:text-rust transition-colors"
+                              onClick={() => removeFromCart(item.id)}
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.9 }}
+                              aria-label="Remove item"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </motion.button>
                           </div>
                           
                           <p className="text-sm text-espresso/70">{item.category}</p>
@@ -123,14 +143,13 @@ function removeDollarSign(price: string | number): string {
                             <div className="flex items-start w-full mr-2 gap-2">
                               <span className="font-semibold text-espresso"> {item.price}</span>
                               <span>ALL</span>
-                            
                             </div>
 
                             {/* Quantity Controls */}
                             <div className="flex items-center gap-2">
                               <motion.button
                                 className="w-8 h-8 flex items-center justify-center bg-ivory border border-espresso/20 rounded-sm hover:border-rust transition-colors"
-                                onClick={() => handleQuantityChange(item.id, item.quantity, -1)}
+                                onClick={() => handleQuantityChange(item, -1)}
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
                                 aria-label="Decrease quantity"
@@ -139,8 +158,12 @@ function removeDollarSign(price: string | number): string {
                               </motion.button>
                               <span className="w-8 text-center font-medium">{item.quantity}</span>
                               <motion.button
-                                className="w-8 h-8 flex items-center justify-center bg-ivory border border-espresso/20 rounded-sm hover:border-rust transition-colors"
-                                onClick={() => handleQuantityChange(item.id, item.quantity, 1)}
+                                disabled={isItemOutOfStock(item)}
+                                className={cn(
+                                  "w-8 h-8 flex items-center justify-center bg-ivory border border-espresso/20 rounded-sm hover:border-rust transition-colors",
+                                  isItemOutOfStock(item) && 'bg-gray-200 text-black cursor-not-allowed'
+                                )}
+                                onClick={() => handleQuantityChange(item, 1)}
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
                                 aria-label="Increase quantity"
@@ -150,9 +173,6 @@ function removeDollarSign(price: string | number): string {
                             </div>
                           </div>
                         </div>
-
-                        {/* Remove Button */}
-                      
                       </motion.div>
                     ))}
                   </AnimatePresence>
@@ -214,5 +234,5 @@ function removeDollarSign(price: string | number): string {
         </>
       )}
     </AnimatePresence>
-  )
+  );
 }

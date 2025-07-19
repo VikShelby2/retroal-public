@@ -88,7 +88,7 @@ export default function CheckoutPage() {
     zipCode: "",
     country: "US",
   })
-
+  useEffect(()=>{console.log(state)} , [state])
   const [orderSummary, setOrderSummary] = useState<OrderSummary>({
     subtotal: 0,
     shipping: 1000,

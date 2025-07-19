@@ -10,7 +10,7 @@ const heroData = {
   title: "Timeless Vintage",
   subtitle: "Curated pieces from decades past",
   cta: "Shop Now",
-  link: '/collections'
+  link: '/shop-all '
 }
 
 export default function HeroSection() {

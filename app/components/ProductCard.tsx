@@ -105,37 +105,25 @@ export default function ProductCard({ product, onClick, index = 0, viewMode = "g
               New
             </motion.span>
           )}
-          {product.isSale && (
+          {product.stock < 1 && (
             <motion.span
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               className="bg-rust text-ivory px-2 py-1 text-xs font-medium rounded-full"
             >
-              Sale
+              Out of Stock
             </motion.span>
           )}
         </div>
 
         <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <motion.button
-            className="bg-ivory/90 p-2 rounded-full hover:bg-ivory transition-colors"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={(e) => {
-              e.stopPropagation()
-              // Handle wishlist
-            }}
-            aria-label="Add to wishlist"
-          >
-            <Heart className="w-4 h-4 text-black" />
-          </motion.button>
+          
           <AddToCartButton
             product={product}
+           
             variant="icon"
-            onClick={(e) => {
-              e.stopPropagation()
-            }}
-          />
+            IconClick={() => onClick(product)}
+            />
         </div>
       </div>
 

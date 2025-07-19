@@ -1,8 +1,7 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ShoppingBag, Check } from "lucide-react"
 import { useCart } from "../contexts/CartContext"
@@ -12,9 +11,10 @@ interface Product {
   name: string
   price: string
   originalPrice?: string
-  image: string
+  images: string[]
   category: string
-  size?: string[]
+  sizes?: string[]
+  stock?: number
 }
 
 interface AddToCartButtonProps {
@@ -23,36 +23,47 @@ interface AddToCartButtonProps {
   quantity?: number
   className?: string
   showQuantity?: boolean
+  disabled?: boolean
   variant?: "primary" | "secondary" | "icon"
 }
 
 export default function AddToCartButton({
   product,
   selectedSize,
+  IconClick ,
   quantity = 1,
   className = "",
   showQuantity = false,
   variant = "primary",
+  disabled: parentDisabled // Renamed for clarity to avoid conflict
 }: AddToCartButtonProps) {
   const { addToCart, openCart, getItemQuantity } = useCart()
   const [isAdding, setIsAdding] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
 
+  // This is the single source of truth for the item's quantity in the cart.
   const currentQuantity = getItemQuantity(product.id, selectedSize)
+
+  // Determine if the item is out of stock by comparing cart quantity to available stock.
+  const isOutOfStock = product.stock !== undefined && currentQuantity >= product.stock 
+
+  // The button is disabled if passed from the parent, during an action, or if out of stock.
+  const isDisabled = parentDisabled || isAdding || showSuccess || isOutOfStock;
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.stopPropagation()
-   
-    // Check if size is required but not selected
-     if (product.size?.length > 0 && !selectedSize) {
-    alert("Please select a size")
-    return
-  }
 
-    console.log(product)
+    // This check is a safeguard; the button should already be disabled.
+    if (isOutOfStock) {
+      return
+    }
+
+    if (product.sizes && product.sizes.length > 0 && !selectedSize) {
+      alert("Please select a size")
+      return
+    }
+
     setIsAdding(true)
-
-    // Simulate API call delay
     await new Promise((resolve) => setTimeout(resolve, 300))
 
     addToCart({
@@ -62,32 +73,44 @@ export default function AddToCartButton({
       originalPrice: product.originalPrice,
       image: product.images[0],
       category: product.category,
-      selectedSize,
-      quantity,
+      selectedSize: selectedSize,
+      quantity: quantity,
+      stock: product.stock
     })
 
     setIsAdding(false)
     setShowSuccess(true)
 
-    // Show success state for 1.5 seconds
     setTimeout(() => {
       setShowSuccess(false)
     }, 1500)
 
-    // Auto-open cart after adding item
     setTimeout(() => {
       openCart()
     }, 500)
   }
 
+  const getButtonText = () => {
+    // Check for out of stock first to provide the clearest message.
+    if (isOutOfStock) {
+      return 'Out of Stock'
+    }
+    if (isAdding) {
+      return "Adding..."
+    }
+    if (currentQuantity > 0) {
+      return `Add Another${showQuantity ? ` (${currentQuantity} in cart)` : ""}`
+    }
+    return "Add to Cart"
+  }
+
   if (variant === "icon") {
     return (
       <motion.button
-        className={`p-2 bg-ivory/90 rounded-full hover:bg-ivory transition-colors ${className}`}
-        onClick={handleAddToCart}
-        disabled={isAdding || showSuccess}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+        className={`p-2 bg-ivory/90 rounded-full hover:bg-ivory transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+       onClick={IconClick}
+        whileHover={!isDisabled ? { scale: 1.1 } : {}}
+        whileTap={!isDisabled ? { scale: 0.9 } : {}}
         aria-label="Add to cart"
       >
         <AnimatePresence mode="wait">
@@ -125,16 +148,18 @@ export default function AddToCartButton({
     <motion.button
       className={`flex items-center justify-center gap-2 px-6 py-3 rounded-sm font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${baseClasses} ${className}`}
       onClick={handleAddToCart}
-      disabled={isAdding || showSuccess}
-      whileHover={{ scale: 1.02, y: -1 }}
-      whileTap={{ scale: 0.98 }}
+      disabled={isDisabled}
+      whileHover={!isDisabled ? { scale: 1.02, y: -1 } : {}}
+      whileTap={!isDisabled ? { scale: 0.98 } : {}}
     >
       <AnimatePresence mode="wait">
         {showSuccess ? (
           <motion.div
             key="success"
-           
             className="flex items-center gap-2"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
           >
             <Check className="w-5 h-5" />
             <span>Added!</span>
@@ -142,17 +167,13 @@ export default function AddToCartButton({
         ) : (
           <motion.div
             key="add"
-          
             className="flex items-center gap-2"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
           >
             <ShoppingBag className="w-5 h-5" />
-            <span>
-              {isAdding
-                ? "Adding..."
-                : currentQuantity > 0
-                  ? `Add Another${showQuantity ? ` (${currentQuantity} in cart)` : ""}`
-                  : "Add to Cart"}
-            </span>
+            <span>{getButtonText()}</span>
           </motion.div>
         )}
       </AnimatePresence>

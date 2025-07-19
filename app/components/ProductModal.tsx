@@ -11,12 +11,13 @@ interface Product {
   name: string
   price: string
   originalPrice?: string
-  image: string
+  images: string[]
   category: string
   description?: string
   sizes?: string[]
   rating?: number
   reviews?: number
+  stock?: number
 }
 
 interface ProductModalProps {
@@ -28,21 +29,31 @@ interface ProductModalProps {
 export default function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
   const [selectedSize, setSelectedSize] = useState("")
   const [quantity, setQuantity] = useState(1)
- 
-  // --- NEW: State for the image slider ---
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isOutOfStock, setIsOutOfStock] = useState(false)
 
-  // --- NEW: Reset index when modal opens or product changes ---
+  useEffect(() => {
+    console.log(isOutOfStock)
+    if (product && typeof product.stock !== 'undefined') {
+      if (product.stock === 0 || quantity > product.stock) {
+        setIsOutOfStock(true)
+      } else {
+        setIsOutOfStock(false)
+      }
+    } else {
+      setIsOutOfStock(false)
+    }
+  }, [product, quantity])
+
   useEffect(() => {
     if (isOpen) {
       setCurrentImageIndex(0)
+      setQuantity(1) // Reset quantity on open
     }
   }, [isOpen, product])
 
-
   if (!product) return null
 
-  // --- NEW: Slider navigation functions ---
   const goToPrevious = () => {
     const isFirstImage = currentImageIndex === 0
     const newIndex = isFirstImage ? product.images.length - 1 : currentImageIndex - 1
@@ -54,11 +65,22 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
     const newIndex = isLastImage ? 0 : currentImageIndex + 1
     setCurrentImageIndex(newIndex)
   }
-  
+
   const goToSlide = (slideIndex: number) => {
-    setCurrentImageIndex(slideIndex);
+    setCurrentImageIndex(slideIndex)
   }
 
+  const handleQuantityChange = (amount: number) => {
+    console.log(product.stock)
+    const newQuantity = quantity + amount;
+    if (newQuantity >= 1) {
+        if (product.stock && newQuantity > product.stock) {
+            setQuantity(product.stock); // Cap quantity at available stock
+        } else {
+            setQuantity(newQuantity);
+        }
+    }
+  }
 
   return (
     <AnimatePresence>
@@ -94,11 +116,11 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
               {/* Product Image */}
-           <motion.div
+              <motion.div
                 initial={{ x: -50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="relative group" // Added 'group' for hover effects
+                className="relative group"
               >
                 {/* Main Image */}
                 <div className="w-full h-96 md:h-full overflow-hidden rounded-lg">
@@ -123,16 +145,16 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
                 </div>
 
                 {/* Left Arrow */}
-                <div 
-                  onClick={goToPrevious} 
+                <div
+                  onClick={goToPrevious}
                   className="absolute top-1/2 -translate-y-1/2 left-3 bg-ivory/70 p-2 rounded-full cursor-pointer md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                 >
                   <ChevronLeft className="w-5 h-5 text-espresso" />
                 </div>
-                
+
                 {/* Right Arrow */}
-                <div 
-                  onClick={goToNext} 
+                <div
+                  onClick={goToNext}
                   className="absolute top-1/2 -translate-y-1/2 right-3 bg-ivory/70 p-2 rounded-full cursor-pointer md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                 >
                   <ChevronRight className="w-5 h-5 text-espresso" />
@@ -225,7 +247,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
                   <div className="flex items-center gap-3">
                     <motion.button
                       className="w-10 h-10 border border-espresso/30 rounded-sm flex items-center justify-center hover:border-rust transition-colors"
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      onClick={() => handleQuantityChange(-1)}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -234,7 +256,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
                     <span className="w-12 text-center font-medium">{quantity}</span>
                     <motion.button
                       className="w-10 h-10 border border-espresso/30 rounded-sm flex items-center justify-center hover:border-rust transition-colors"
-                      onClick={() => setQuantity(quantity + 1)}
+                      onClick={() => handleQuantityChange(1)}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -250,7 +272,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
                     selectedSize={selectedSize}
                     quantity={quantity}
                     className="flex-1"
-                    showQuantity={true}
+                    disabled={isOutOfStock}
                   />
                   <motion.button
                     className="bg-rust text-ivory py-3 px-4 rounded-sm hover:bg-opacity-90 transition-colors"

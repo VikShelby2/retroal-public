@@ -73,7 +73,7 @@ useEffect(()=>{
                   {/* Image Container */}
                   <div className="relative overflow-hidden rounded-sm mb-2">
                     <Image
-                      src={collection.photo.url || "/placeholder.svg"}
+                      src={collection?.photo?.url || "/placeholder.svg"}
                       alt={collection.name}
                       width={400}
                       height={500}

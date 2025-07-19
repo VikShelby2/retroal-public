@@ -312,7 +312,7 @@ const { selectedCollection, selectedCollectionProducts, loading, error  ,  newLo
         <div className="text-center">
            <div className="w-full h-[300px] flex items-center jusitfy-center"><Loader className="animate-spin" /></div>
         </div>
-      </div>
+      </div>  
     )
   }
 
@@ -367,7 +367,14 @@ const { selectedCollection, selectedCollectionProducts, loading, error  ,  newLo
             ))}
           </motion.div>
         ) : (
-          <div className="w-full h-[300px] flex items-center jusitfy-center"><Loader className="animate-spin" /></div>
+          <div className="min-h-40 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className=" text-4xl font-bold text-espresso mb-4">No products Yet</h1>
+          <Link href="/collections" className="text-rust hover:text-espresso underline">
+            Back to Collections
+          </Link>
+        </div>
+      </div>
         )}
       </div>
         <ProductModal product={selectedProduct} isOpen={isModalOpen} onClose={handleCloseModal} />
