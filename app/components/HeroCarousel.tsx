@@ -6,7 +6,7 @@ import Link from "next/link"
 
 // We no longer need an array, just the data for our single, static hero section.
 const heroData = {
-  image: "https://wallpapers.com/images/hd/vogue-street-style-mens-fashion-dsfji3119irooc02.jpg",
+  image: "https://fluxhawaii.com/wp-content/uploads/2024/03/FLUX-SS23_Old-Queen-Street-Stadium-Hero.jpg",
   title: "Timeless Vintage",
   subtitle: "Curated pieces from decades past",
   cta: "Shop Now",
