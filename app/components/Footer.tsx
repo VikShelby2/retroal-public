@@ -33,7 +33,7 @@ export default function Footer() {
           >
             <h3 className=" text-2xl font-bold mb-4">Velvet Revival</h3>
             <p className="text-ivory/80 mb-6 leading-relaxed">
-              Curating timeless vintage fashion for the modern wardrobe since 2018. Every piece tells a story.
+              Vintage is the Future.Every piece tells a story.
             </p>
             <div className="flex space-x-4">
               {socialIcons.map(({ Icon, href, label }, index) => (
