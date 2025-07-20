@@ -31,9 +31,9 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
             className="md:col-span-1"
           >
-            <h3 className=" text-2xl font-bold mb-1">Velvet Revival</h3>
+            <h3 className=" text-2xl font-bold ">Vintage is the Future</h3>
             <p className="text-ivory/80 mb-6 leading-relaxed">
-              Vintage is the Future.Every piece tells a story.
+            Every piece tells a story.
             </p>
             <div className="flex space-x-4">
               {socialIcons.map(({ Icon, href, label }, index) => (
