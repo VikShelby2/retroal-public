@@ -190,29 +190,7 @@ export default function Header() {
                 ))}
 
                 {/* Mobile Search */}
-                <motion.div
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="pt-4 border-t border-warm-brown/10"
-                >
-                  <form onSubmit={handleSearch} className="relative">
-                    <input
-                      type="text"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      placeholder="Search vintage treasures..."
-                      className="w-full pl-4 pr-12 py-2 border border-warm-brown/20 rounded-sm text-black bg-white placeholder-black/60 focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
-                    />
-                    <button
-                      type="submit"
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-black transition-colors"
-                      aria-label="Submit search"
-                    >
-                      <Search className="w-4 h-4" />
-                    </button>
-                  </form>
-                </motion.div>
+          
               </nav>
             </motion.div>
           )}

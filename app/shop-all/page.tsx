@@ -42,7 +42,7 @@ export default function ShopPage() {
     dispatch(listStoreProducts(MOCK_STORE_ID , setNewLoading));
     
   }, [dispatch]); 
-  const [searchQuery, setSearchQuery] = useState("")
+  const [searchQuery, setSearchQuery] = useState(initialSearchQuery)
   const [sortBy, setSortBy] = useState("featured")
   const [filters, setFilters] = useState({
     categories: [] as string[],
@@ -56,6 +56,14 @@ export default function ShopPage() {
   })
 
   const itemsPerPage = 12
+    // and whenever the URL search params change.
+  useEffect(() => {
+    const urlSearchTerm = searchParams.get('search');
+    if (urlSearchTerm) {
+      // Update our component's state to match the URL
+      setSearchQuery(urlSearchTerm);
+    }
+  }, [searchParams]); // The dependency array ensures this runs when params change
 
   // Filter and sort products
  const filteredAndSortedProducts = useMemo(() => {
