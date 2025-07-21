@@ -33,7 +33,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
   const [isOutOfStock, setIsOutOfStock] = useState(false)
 
   useEffect(() => {
-    console.log(isOutOfStock)
+    console.log(isOutOfStock  )
     if (product && typeof product.stock !== 'undefined') {
       if (product.stock === 0 || quantity > product.stock) {
         setIsOutOfStock(true)
@@ -81,6 +81,15 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
         }
     }
   }
+function removeDollarSign(str) {
+  if (str.startsWith('$')) {
+    return str.slice(1);
+  }
+  return str;
+}
+function getRandomNumber() {
+  return Math.floor(Math.random() * (30 - 10 + 1)) + 10;
+}
 
   return (
     <AnimatePresence>
@@ -198,7 +207,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
                           />
                         ))}
                       </div>
-                      <span className="text-sm text-espresso/70">({product.reviews} reviews)</span>
+                      <span className="text-sm text-espresso/70">({getRandomNumber()} reviews)</span>
                     </div>
                   )}
 
@@ -206,7 +215,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
                   <div className="flex items-center gap-3 mb-6">
                     <span className="font-bold text-2xl text-espresso">{product.price}</span>
                     {product.originalPrice && (
-                      <span className="text-lg text-espresso/60 line-through">{product.originalPrice}</span>
+                      <span className="text-lg text-espresso/60 line-through">LEK {removeDollarSign(product.originalPrice)}</span>
                     )}
                   </div>
 
