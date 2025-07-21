@@ -6,7 +6,7 @@ import Link from "next/link"
 
 // We no longer need an array, just the data for our single, static hero section.
 const heroData = {
-  image: "https://fluxhawaii.com/wp-content/uploads/2024/03/FLUX-SS23_Old-Queen-Street-Stadium-Hero.jpg",
+  image: "/a.jpg",
   title: "Timeless Vintage",
   subtitle: "Curated pieces from decades past",
   cta: "Shop Now",
@@ -17,7 +17,7 @@ export default function HeroSection() {
   // All state (useState) and side effects (useEffect) for the carousel have been removed.
 
   return (
-    <section className="relative h-[66vh] overflow-hidden">
+    <section className="relative h-[50vh] overflow-hidden">
       {/* Background Image: No longer needs AnimatePresence or a key */}
       <motion.div
         initial={{ opacity: 0 }}
