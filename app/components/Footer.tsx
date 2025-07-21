@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Instagram, Facebook, Twitter, Mail,TikTok , Phone, MapPin } from "lucide-react"
+import { Instagram, Facebook, Twitter, Mail , Phone, MapPin } from "lucide-react"
 import Link from "next/link"
 import { FaTiktok } from "react-icons/fa";
 export default function Footer() {
@@ -15,7 +15,7 @@ export default function Footer() {
 
   const contactInfo = [
     { Icon: Mail, text: "retroshop.al@gmail.com" },
-    { Icon: Phone, text: "+355676738955" },
+    
     { Icon: MapPin, text: "Tirane , Albania" },
   ]
 

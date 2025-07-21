@@ -17,7 +17,7 @@ export default function HeroSection() {
   // All state (useState) and side effects (useEffect) for the carousel have been removed.
 
   return (
-    <section className="relative h-screen overflow-hidden">
+    <section className="relative h-[66vh] overflow-hidden">
       {/* Background Image: No longer needs AnimatePresence or a key */}
       <motion.div
         initial={{ opacity: 0 }}

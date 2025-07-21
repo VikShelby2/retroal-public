@@ -136,50 +136,7 @@ export default function FilterSidebar({ filters, setFilters, onClearAll }: Filte
       </FilterSection>
 
       {/* Price Range */}
-      <FilterSection title="Price Range" isExpanded={expandedSections.price} onToggle={() => toggleSection("price")}>
-        <div className="space-y-4">
-          <div className="flex items-center gap-4">
-            <input
-              type="number"
-              placeholder="Min"
-              value={filters.priceRange[0]}
-              onChange={(e) =>
-                setFilters({
-                  ...filters,
-                  priceRange: [Number.parseInt(e.target.value) || 0, filters.priceRange[1]],
-                })
-              }
-              className="w-20 px-3 py-2 border border-espresso/20 rounded-sm text-sm focus:outline-none focus:border-rust"
-            />
-            <span className="text-espresso/50">to</span>
-            <input
-              type="number"
-              placeholder="Max"
-              value={filters.priceRange[1]}
-              onChange={(e) =>
-                setFilters({
-                  ...filters,
-                  priceRange: [filters.priceRange[0], Number.parseInt(e.target.value) || 500],
-                })
-              }
-              className="w-20 px-3 py-2 border border-espresso/20 rounded-sm text-sm focus:outline-none focus:border-rust"
-            />
-          </div>
-          <input
-            type="range"
-            min="0"
-            max="500"
-            value={filters.priceRange[1]}
-            onChange={(e) =>
-              setFilters({
-                ...filters,
-                priceRange: [filters.priceRange[0], Number.parseInt(e.target.value)],
-              })
-            }
-            className="w-full accent-rust"
-          />
-        </div>
-      </FilterSection>
+     
 
       {/* Sizes */}
       <FilterSection isW title="Size" isExpanded={expandedSections.size} onToggle={() => toggleSection("size")}>
@@ -245,43 +202,7 @@ export default function FilterSidebar({ filters, setFilters, onClearAll }: Filte
         </div>
       </FilterSection>
 
-      {/* Era */}
-      <FilterSection title="Era" isExpanded={expandedSections.era} onToggle={() => toggleSection("era")}>
-        <div className="space-y-2">
-          {eras.map((era) => (
-            <label key={era} className="flex items-center cursor-pointer group">
-              <input
-                type="checkbox"
-                checked={filters.eras.includes(era)}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    setFilters({ ...filters, eras: [...filters.eras, era] })
-                  } else {
-                    setFilters({ ...filters, eras: filters.eras.filter((e: string) => e !== era) })
-                  }
-                }}
-                className="sr-only"
-              />
-              <div
-                className={`w-4 h-4 border-2 rounded-sm mr-3 transition-colors ${
-                  filters.eras.includes(era) ? "bg-rust border-rust" : "border-espresso/30 group-hover:border-rust"
-                }`}
-              >
-                {filters.eras.includes(era) && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="w-full h-full flex items-center justify-center"
-                  >
-                    <div className="w-2 h-2 bg-ivory rounded-sm" />
-                  </motion.div>
-                )}
-              </div>
-              <span className="text-espresso group-hover:text-rust transition-colors">{era}</span>
-            </label>
-          ))}
-        </div>
-      </FilterSection>
+
 
       {/* Condition */}
       <FilterSection
