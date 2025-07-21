@@ -230,6 +230,7 @@ useEffect(() => {
     setError(null)
     const orderPayload = {
       shippingInfo: shippingInfo,
+      shipping : orderSummary.shipping,
       cartItems: state.items.map((item) => ({
         name: item.name,
         qty: item.quantity,
