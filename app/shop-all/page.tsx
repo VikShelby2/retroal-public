@@ -15,10 +15,13 @@ import Breadcrumbs from "../components/Breadcrumbs"
 import { Filter, Grid, List, X } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import { listStoreProducts } from "@/lib/actions"
+import { useSearchParams } from "next/navigation"
 
 // Extended product data
 
 export default function ShopPage() {
+    const searchParams = useSearchParams()
+  const initialSearchQuery = searchParams.get('search') || ""
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)

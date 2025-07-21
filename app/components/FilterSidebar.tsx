@@ -29,7 +29,7 @@ export default function FilterSidebar({ filters, setFilters, onClearAll }: Filte
     }))
   }
 
-  const categories = ["Outerwear", "Tops", "Bottoms", "Dresses", "Shoes", "Accessories"]
+  const categories = ["Jackets" ,"Accessories" ,  "Jerseys" ,"T-shirts","Puffers","Polos" , "Hoodies" ,"Trackpants & shorts"]
   const sizes = ["XS", "S", "M", "L", "XL"]
   const colors = [
     "Black",
@@ -45,7 +45,6 @@ export default function FilterSidebar({ filters, setFilters, onClearAll }: Filte
     "Floral",
     "Earth Tones",
   ]
-  const eras = ["1950s", "1960s", "1970s", "1980s", "1990s"]
   const conditions = ["Excellent", "Very Good", "Good"]
 
   const FilterSection = ({ title, isExpanded, onToggle, children , isW   }: any) => (

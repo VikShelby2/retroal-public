@@ -345,7 +345,7 @@ const { selectedCollection, selectedCollectionProducts, loading, error  ,  newLo
               {selectedCollectionProducts.length} {selectedCollectionProducts.length === 1 ? "piece" : "pieces"}
             </h2>
           </div>
-          <SortDropdown sortBy={sortBy} setSortBy={setSortBy} />
+       
         </motion.div>
 
         {/* Products Grid */}

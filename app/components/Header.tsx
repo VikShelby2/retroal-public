@@ -19,7 +19,7 @@ export default function Header() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     if (searchTerm.trim()) {
-      router.push(`/shop?search=${encodeURIComponent(searchTerm.trim())}`)
+      router.push(`/shop-all?search=${encodeURIComponent(searchTerm.trim())}`)
       setSearchTerm("")
       setIsSearchOpen(false)
     }
