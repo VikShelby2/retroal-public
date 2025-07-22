@@ -345,7 +345,6 @@ const { selectedCollection, selectedCollectionProducts, loading, error  ,  newLo
               {selectedCollectionProducts.length} {selectedCollectionProducts.length === 1 ? "piece" : "pieces"}
             </h2>
           </div>
-       
         </motion.div>
 
         {/* Products Grid */}

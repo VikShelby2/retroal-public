@@ -247,7 +247,14 @@ export default function ShopPage() {
           <div className="flex-1">
             {/* Search and Controls */}
             <div className="mb-6 space-y-4">
-           
+              <div className="flex w-full items-center justify-end">
+  <SortDropdown
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                   // Pass the options you defined
+                />
+              </div>
+             
 
               <div className="flex flex-col w-full sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div className="flex w-full justify-between md:justify-normal items-center gap-4">
