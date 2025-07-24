@@ -200,17 +200,16 @@ useEffect(() => {
   const validateStep = (step: number) => {
     if (step === 1) {
       // Email validation: must include "@"
-      const isEmailValid = shippingInfo.email.includes("@") && shippingInfo.email.length > 3;
+      
       const isphone = shippingInfo.phone.length > 5 ;
       return (
         shippingInfo.firstName &&
         shippingInfo.lastName &&
-        isEmailValid &&
+       
         isphone &&
         shippingInfo.address &&
         shippingInfo.city &&
-        shippingInfo.state &&
-        shippingInfo.zipCode &&
+      
         shippingInfo.country
       )
     }
@@ -480,26 +479,8 @@ useEffect(() => {
                         required
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-espresso mb-2">State/Province *</label>
-                      <input
-                        type="text"
-                        value={shippingInfo.state}
-                        onChange={(e) => handleInputChange("state", e.target.value)}
-                        className="w-full px-4 py-3 border border-espresso/20 rounded-sm focus:outline-none focus:border-rust bg-white transition-colors"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-espresso mb-2">ZIP/Postal Code *</label>
-                      <input
-                        type="text"
-                        value={shippingInfo.zipCode}
-                        onChange={(e) => handleInputChange("zipCode", e.target.value)}
-                        className="w-full px-4 py-3 border border-espresso/20 rounded-sm focus:outline-none focus:border-rust bg-white transition-colors"
-                        required
-                      />
-                    </div>
+                    
+                 
                     <div>
                       <label className="block text-sm font-medium text-espresso mb-2">Country *</label>
                       <select
