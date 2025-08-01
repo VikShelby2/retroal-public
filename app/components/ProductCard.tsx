@@ -23,7 +23,12 @@ interface ProductCardProps {
   index?: number
   viewMode?: "grid" | "list"
 }
-
+function removeDollarSign(str) {
+  if (str.startsWith('$')) {
+    return str.slice(1);
+  }
+  return str;
+}
 export default function ProductCard({ product, onClick, index = 0, viewMode = "grid" }: ProductCardProps) {
   if (viewMode === "list") {
     return (
@@ -64,7 +69,7 @@ export default function ProductCard({ product, onClick, index = 0, viewMode = "g
             <div className="flex items-center gap-2">
               <span className="font-bold text-lg text-black">{product.price} LEK</span>
               {product.originalPrice && (
-                <span className="text-sm text-black/60 line-through">{product.originalPrice} lek</span>
+                <span className="text-sm text-black/60 line-through">{removeDollarSign(product.originalPrice)} LEK</span>
               )}
             </div>
             <AddToCartButton product={product} variant="secondary" className="px-4 py-2 text-sm" />
@@ -134,6 +139,9 @@ export default function ProductCard({ product, onClick, index = 0, viewMode = "g
         </h3>
         <div className="flex items-center gap-2">
           <span className=" text-sm text-black">{product.price} LEK</span>
+            {product.originalPrice && (
+                <span className="text-sm text-black/60 line-through">{removeDollarSign(product.originalPrice)} LEK</span>
+              )}
           
         </div>
       </div>

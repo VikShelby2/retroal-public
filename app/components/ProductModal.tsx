@@ -190,30 +190,17 @@ function getRandomNumber() {
                 transition={{ delay: 0.3 }}
                 className="flex flex-col"
               >
-                <div className="mb-4">
+                <div className="mb-2">
                   <p className="text-rust font-medium mb-2">{product.category}</p>
                   <h2 id="product-modal-title" className=" text-3xl font-bold text-espresso mb-4">
                     {product.name}
                   </h2>
 
-                  {/* Rating */}
-                  {product.rating && (
-                    <div className="flex items-center gap-2 mb-4">
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-4 h-4 ${i < product.rating! ? "text-gold fill-current" : "text-espresso/30"}`}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-sm text-espresso/70">({getRandomNumber()} reviews)</span>
-                    </div>
-                  )}
-
+                
+                 
                   {/* Price */}
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="font-bold text-2xl text-espresso">{product.price}</span>
+                    <span className="font-bold text-2xl text-espresso">{product.price} LEK</span>
                     {product.originalPrice && (
                       <span className="text-lg text-espresso/60 line-through">LEK {removeDollarSign(product.originalPrice)}</span>
                     )}
