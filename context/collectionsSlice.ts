@@ -1,69 +1,113 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 // NEW: Thunk to fetch all collections
+import { db } from "@/lib/firebase"
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  query,
+  where,
+  documentId,
+} from "firebase/firestore"
 
+type FSDoc = Record<string, any>
 
-export const fetchCollectionWithProducts = createAsyncThunk(
-  'collections/fetchWithProducts',
-  async (collectionId, { rejectWithValue }) => {
-    try {
-      // Calling the new backend endpoint we created
-      const response = await fetch(`https://retro-server-ux4v.onrender.com/api/product/collection/client/get/${collectionId}`);
-      const data = await response.json();
-
-      if (!response.ok) {
-        // Use the error message from the backend response
-        return rejectWithValue(data.message);
-      }
-      // The payload will be { collection: {...}, products: [...] }
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-
-export const fetchCollections = createAsyncThunk(
-  'collections/fetchAll',
-  async (_, { rejectWithValue }) => {
-    const store ={
-  _id: '686d8f84ebaaf33771f8fe79'
+function mapSnap<T = FSDoc>(d: any): T & { id: string } {
+  return { id: d.id, ...(d.data() as any) }
 }
+
+// Firestore `in` operator allows max 10 values; chunk helper
+function chunk<T>(arr: T[], size = 10): T[][] {
+  const res: T[][] = []
+  for (let i = 0; i < arr.length; i += size) res.push(arr.slice(i, i + size))
+  return res
+}
+
+/**
+ * Get ALL collections from Firestore (no filters)
+ * Returns: Array<{ id, ...collectionData }>
+ */
+export const fetchCollections = createAsyncThunk(
+  "collections/fetchAll",
+  async (_: void, { rejectWithValue }) => {
     try {
-      // This endpoint should return all collections. Adjust if your API is different.
-      const response = await fetch(`https://retro-server-ux4v.onrender.com/api/product/collection/list` ,
-    {    method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: "include" ,
-          body: JSON.stringify({ storeId: store._id }),
-        }
-      );
-      const data = await response.json();
-      if (!response.ok) {
-        return rejectWithValue(data.message);
-      }
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
+      const snap = await getDocs(collection(db, "collections"))
+      const items = snap.docs.map(mapSnap)
+      return items
+    } catch (err: any) {
+      return rejectWithValue(err?.message || "Failed to fetch collections")
     }
   }
-);
+)
 
+/**
+ * Get ONE collection by id (no products)
+ * Returns: { id, ...collectionData }
+ */
 export const fetchCollectionById = createAsyncThunk(
-  'collections/fetchById',
-  async (collectionId, { rejectWithValue }) => {
+  "collections/fetchById",
+  async (collectionId: string, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://retro-server-ux4v.onrender.com/api/product/collection/${collectionId}`);
-      const data = await response.json();
-      if (!response.ok) return rejectWithValue(data.message);
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
+      const ref = doc(db, "collections", collectionId)
+      const snap = await getDoc(ref)
+      if (!snap.exists()) {
+        return rejectWithValue("Collection not found")
+      }
+      return { id: snap.id, ...(snap.data() as any) }
+    } catch (err: any) {
+      return rejectWithValue(err?.message || "Failed to fetch collection")
     }
   }
-);
+)
 
+/**
+ * Get ONE collection + its products
+ * Expects the collection to have `products: string[]` (product ids).
+ * Returns: { collection: {...}, products: Array<{ id, ...productData }> }
+ */
+export const fetchCollectionWithProducts = createAsyncThunk(
+  "collections/fetchWithProducts",
+  async (collectionId: string, { rejectWithValue }) => {
+    try {
+      // 1) Load collection
+      const cRef = doc(db, "collections", collectionId)
+      const cSnap = await getDoc(cRef)
+      if (!cSnap.exists()) {
+        return rejectWithValue("Collection not found")
+      }
+      const collectionData = { id: cSnap.id, ...(cSnap.data() as any) }
+
+      // 2) Read product ids from the collection
+      const ids: string[] = Array.isArray(collectionData.products)
+        ? collectionData.products.map(String)
+        : []
+
+      // 3) If there are no product ids, return empty list
+      if (ids.length === 0) {
+        return { collection: collectionData, products: [] }
+      }
+
+      // 4) Fetch products by ids in chunks of 10 (Firestore IN limit)
+      const products: any[] = []
+      for (const group of chunk(ids, 10)) {
+        const q = query(collection(db, "products"), where(documentId(), "in", group))
+        const snap = await getDocs(q)
+        products.push(...snap.docs.map(mapSnap))
+      }
+
+      // Optional: If you want to preserve the order of `collection.products`,
+      // re-order the fetched list accordingly:
+      const indexMap = new Map(ids.map((id, i) => [id, i]))
+      products.sort((a, b) => (indexMap.get(a.id) ?? 0) - (indexMap.get(b.id) ?? 0))
+
+      return { collection: collectionData, products }
+    } catch (err: any) {
+      return rejectWithValue(err?.message || "Failed to fetch collection with products")
+    }
+  }
+)
 export const editCollection = createAsyncThunk(
   'collections/edit',
   async ({ id, collectionData }, { rejectWithValue }) => {

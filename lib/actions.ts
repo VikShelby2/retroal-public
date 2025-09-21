@@ -1,36 +1,37 @@
-import { setLoading, setProducts, setError } from '../context/productsSlice';
+// thunks/products.ts
+import { setLoading, setProducts, setError } from "../context/productsSlice"
+import { db } from "@/lib/firebase"
+import { collection, onSnapshot } from "firebase/firestore"
 
-// A "thunk" that handles the async API call
-export const listStoreProducts = (storeId:string , setNewLoader) => async (dispatch:any) => {
-  dispatch(setLoading(true));
-  dispatch(setError(null));
+ const listStoreProducts = (storeId: string, setNewLoader: (b: boolean) => void) => 
+  (dispatch: any) => {
+    dispatch(setLoading(true))
+    dispatch(setError(null))
+    setNewLoader?.(true)
 
-  try {
-    const response = await fetch('https://retro-server-ux4v.onrender.com/api/product/list/client', { // Make sure your backend port is correct
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ storeId }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      setNewLoader(false)
-      throw new Error(errorData.message || 'Failed to fetch products');
+    try {
+      const unsub = onSnapshot(
+        collection(db, "products"),
+        (snap) => {
+          const productData = snap.docs.map((doc) => ({ id: doc.id, ...(doc.data() as any) }))
+          dispatch(setProducts(productData))
+          setNewLoader?.(false)
+          dispatch(setLoading(false))
+        },
+        (error) => {
+          dispatch(setError(error?.message || "Failed to fetch products"))
+          setNewLoader?.(false)
+          dispatch(setLoading(false))
+        }
+      )
+      return unsub // caller should store and call unsub() on unmount
+    } catch (err: any) {
+      dispatch(setError(err?.message || "Failed to fetch products"))
+      setNewLoader?.(false)
+      dispatch(setLoading(false))
+      return () => {}
     }
-
-    const productData = await response.json();
-    dispatch(setProducts(productData));
-    setNewLoader(false)
-    console.log(productData)
-  } catch (error:any) {
-    dispatch(setError(error.message));
-    setNewLoader(false)
-  } finally {
-    dispatch(setLoading(false));
-    setNewLoader(false)
   }
-};
 
 
+  export { listStoreProducts }

@@ -8,6 +8,8 @@ import { useCart } from "../contexts/CartContext"
 import { ArrowLeft, Package, Truck, CreditCard, Check, MapPin, User, Phone, Mail } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { addDoc, collection, serverTimestamp } from "firebase/firestore"
+import { db } from "@/lib/firebase"
 
 interface ShippingInfo {
   firstName: string
@@ -225,46 +227,85 @@ useEffect(() => {
   const [error, setError] = useState<string | null>(null)
 
   const handlePlaceOrder = async () => {
-    setIsProcessing(true)
-    setError(null)
-    const orderPayload = {
-      shippingInfo: shippingInfo,
-      shipping : orderSummary.shipping,
-      cartItems: state.items.map((item) => ({
-        name: item.name,
-        qty: item.quantity,
-        size: item.selectedSize,
-        image: item.image,
-        price: Number.parseFloat(item.price.replace("LEK", "")),
-        product: item.id,
-      })),
-    }
+  setIsProcessing(true)
+  setError(null)
 
-    try {
-      const response = await fetch("https://retro-server-ux4v.onrender.com/api/orders/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderPayload),
-      })
+  // sanitize price strings like "LEK 1234.56"
+  const parseLek = (s: string | number) =>
+    typeof s === "number" ? s : Number.parseFloat(String(s).replace(/[^\d.]/g, "")) || 0
 
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.message || "The server could not process the order.")
-      }
+  // build cart items payload
+  const cartItems = state.items.map((item) => ({
+    productId: item.id,
+    name: item.name,
+    qty: item.quantity,
+    size: item.selectedSize ?? null,
+    image: item.image ?? null,
+    unitPrice: parseLek(item.price), // stored as number (LEK)
+    lineTotal: parseLek(item.price) * item.quantity,
+  }))
 
-      const createdOrder = await response.json()
-      setOrderNumber(createdOrder.orderNumber)
-      setOrderComplete(true)
-      clearCart()
-    } catch (err: any) {
-      console.error("Failed to place order:", err)
-      setError(err.message || "An unexpected error occurred. Please check your connection and try again.")
-    } finally {
-      setIsProcessing(false)
-    }
+  const subtotal = cartItems.reduce((sum, i) => sum + i.lineTotal, 0)
+  const shippingCost = parseLek(orderSummary?.shipping ?? 0)
+  const grandTotal = subtotal + shippingCost
+
+  // simple readable order number, e.g., R-20250921-AB12CD
+  const makeOrderNumber = () => {
+    const d = new Date()
+    const yyyymmdd = [
+      d.getFullYear(),
+      String(d.getMonth() + 1).padStart(2, "0"),
+      String(d.getDate()).padStart(2, "0"),
+    ].join("")
+    const rand = Math.random().toString(36).slice(-6).toUpperCase()
+    return `R-${yyyymmdd}-${rand}`
   }
+
+  const orderNumber = makeOrderNumber()
+
+  // Firestore order document
+  const orderDoc = {
+    orderNumber,                     // human-friendly id
+    status: "pending",               // pending | paid | fulfilled | cancelled
+    currency: "LEK",
+    pricing: {
+      subtotal,
+      shipping: shippingCost,
+      total: grandTotal,
+    },
+    shippingInfo,                    // whatever object you already have
+    items: cartItems,                // array of lines
+    meta: {
+      createdAt: serverTimestamp(),
+      // userId: currentUser?.uid ?? null,     // if you have auth, uncomment
+      // email: currentUser?.email ?? null,
+      source: "web",
+    },
+  }
+
+  try {
+    // 1) Create the order
+    const ref = await addDoc(collection(db, "orders"), orderDoc)
+
+    // 2) (Optional) decrement stock atomically
+    // const batch = writeBatch(db)
+    // for (const line of cartItems) {
+    //   const pRef = doc(db, "products", line.productId)
+    //   batch.update(pRef, { stock: increment(-line.qty) })
+    // }
+    // await batch.commit()
+
+    setOrderNumber(orderNumber)  // show friendly number
+    setOrderComplete(true)
+    clearCart()
+  } catch (err: any) {
+    console.error("Failed to place order:", err)
+    setError(err?.message || "An unexpected error occurred. Please check your connection and try again.")
+  } finally {
+    setIsProcessing(false)
+  }
+}
+
 
   const steps = [
     { number: 1, title: "Shipping", icon: Package },

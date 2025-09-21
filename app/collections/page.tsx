@@ -69,7 +69,7 @@ useEffect(()=>{
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <Link href={`/collections/${collection._id}`}>
+              <Link href={`/collections/${collection.id}`}>
                 <div className="group cursor-pointer mb-1">
                   {/* Image Container */}
                   <div className="relative overflow-hidden rounded-sm mb-2">
