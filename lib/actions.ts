@@ -13,8 +13,16 @@ import { collection, onSnapshot } from "firebase/firestore"
       const unsub = onSnapshot(
         collection(db, "products"),
         (snap) => {
-          const productData = snap.docs.map((doc) => ({ id: doc.id, ...(doc.data() as any) }))
-          dispatch(setProducts(productData))
+          // Sort products by createdAt descending (newest first)
+          const productData = snap.docs
+            .map((doc) => ({ id: doc.id, ...(doc.data() as any) }))
+            .sort((a, b) => {
+              // If createdAt is a Firestore Timestamp, convert to millis
+              const aTime = a.createdAt?.toMillis ? a.createdAt.toMillis() : a.createdAt || 0;
+              const bTime = b.createdAt?.toMillis ? b.createdAt.toMillis() : b.createdAt || 0;
+              return bTime - aTime;
+            });
+          dispatch(setProducts(productData)) // Don't put createdAt in Redux state
           setNewLoader?.(false)
           dispatch(setLoading(false))
         },
